@@ -21,7 +21,7 @@ public class QuizUI extends JFrame implements ActionListener {
     private void setupQuizUI() {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 200);
+        setSize(700, 400);
         setTitle("Quiz App");
 
         scoreLabel = new JLabel("Your Current Score: 0", SwingConstants.CENTER);

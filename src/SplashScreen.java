@@ -48,8 +48,6 @@ public class SplashScreen extends JFrame implements ActionListener {
         if (e.getSource() == new_user) {
             String enteredUsername = username.getText();
             String enteredPassword = password.getText();
-            QuizLogic logic = new QuizLogic();
-            new QuizUI(logic);
             DatabaseConnector.getConnection(enteredUsername, enteredPassword);
 
         } else if (e.getSource() == existing_user) {

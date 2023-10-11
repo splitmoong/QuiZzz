@@ -11,6 +11,19 @@ public class DatabaseConnector {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
+            String checkSql = "SELECT COUNT(*) FROM players WHERE player_username = ?";
+            PreparedStatement checkStatement = conn.prepareStatement(checkSql);
+            checkStatement.setString(1, user_username);
+            ResultSet resultSet = checkStatement.executeQuery();
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                if (count > 0) {
+                    System.out.println("Username already exists.");
+                    return conn; // Return the connection without inserting
+                }
+            }
+
+
             String sql = "INSERT INTO players (player_username, player_password)" + "VALUES (?,?)";
 
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
@@ -21,6 +34,8 @@ public class DatabaseConnector {
             if (rowsInserted > 0) {
                 System.out.println("A new row has been inserted.");
             }
+            QuizLogic logic = new QuizLogic();
+            new QuizUI(logic);
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
