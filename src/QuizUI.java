@@ -20,12 +20,12 @@ public class QuizUI extends JPanel implements ActionListener {
     public QuizUI(QuizLogic quizLogic, JFrame parentFrame, CardLayout cardLayout) {
         this.cardLayout = cardLayout;
 
-        // First, set the questions, choices, and correctAnswers from quizLogic
+
         this.questions = quizLogic.getQuestions();
         this.choices = quizLogic.getChoices();
         this.correctAnswers = quizLogic.getAnswers();
 
-        // Then, initialize the UI components
+
         initializeUIComponents(parentFrame, cardLayout);
     }
 
@@ -36,7 +36,7 @@ public class QuizUI extends JPanel implements ActionListener {
         scoreLabel = new JLabel("Score: 0", JLabel.CENTER); // Aligned to center
         add(scoreLabel, BorderLayout.NORTH);
 
-        // Use a new JPanel to hold both the question and the choices vertically
+
         JPanel centerPanel = new JPanel(new BorderLayout());
 
         questionLabel = new JLabel(questions[currentQuestionIndex]);
@@ -53,7 +53,7 @@ public class QuizUI extends JPanel implements ActionListener {
         updateChoices();
         centerPanel.add(answersPanel, BorderLayout.CENTER); // Adjusted to center
 
-        add(centerPanel, BorderLayout.CENTER); // Adding centerPanel to the main layout
+        add(centerPanel, BorderLayout.CENTER);
 
         submitButton = new JButton("Submit Answer");
         submitButton.addActionListener(this);
