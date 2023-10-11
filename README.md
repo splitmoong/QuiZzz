@@ -1,5 +1,6 @@
 # QuiZzz
 12.10.2023
+
 Functionality
 1. There is a splash screen that prompts you for username and password and two buttons underneath. 
 2. Currently only the new user button works with full functionality (that is if you enter a username that is already present in the database, nothing will happen however if it's new, it will go on to the mcq section.
