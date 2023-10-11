@@ -1,48 +1,42 @@
 public class QuizLogic {
-    private int score = 0;
-    private int questionIndex = 0;
+    private String[] questions;
+    private String[][] choices;
+    private String[] answers;
 
-    private String[] questions = {
-            "What is the capital of France?",
-            "Which planet is known as the Red Planet?",
-            "What is the largest mammal in the world?"
-    };
-
-    private String[][] choices = {
-            {"A) London", "B) Berlin", "C) Paris", "D) Madrid"},
-            {"A) Venus", "B) Mars", "C) Jupiter", "D) Saturn"},
-            {"A) Elephant", "B) Giraffe", "C) Blue Whale", "D) Polar Bear"}
-    };
-
-    private String[] correctAnswers = {"C", "B", "C"};
-
-    public String getCurrentQuestion() {
-        return questions[questionIndex];
+    public QuizLogic() {
+        // Default to General Knowledge if no topic is provided
+        setTopic("General Knowledge");
     }
 
-    public String[] getCurrentChoices() {
-        return choices[questionIndex];
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getTotalQuestions() {
-        return questions.length;
-    }
-
-    public boolean answerQuestion(String userAnswer) {
-        boolean isCorrect = userAnswer.equals(correctAnswers[questionIndex]);
-        if (isCorrect) {
-            score++;
+    public void setTopic(String topic) {
+        switch(topic) {
+            case "General Knowledge":
+                this.questions = QuestionBank.GENERAL_KNOWLEDGE_QUESTIONS;
+                this.choices = QuestionBank.GENERAL_KNOWLEDGE_CHOICES;
+                this.answers = QuestionBank.GENERAL_KNOWLEDGE_ANSWERS;
+                break;
+            case "Computer Science":
+                this.questions = QuestionBank.COMPUTER_SCIENCE_QUESTIONS;
+                this.choices = QuestionBank.COMPUTER_SCIENCE_CHOICES;
+                this.answers = QuestionBank.COMPUTER_SCIENCE_ANSWERS;
+                break;
+            case "Gaming":
+                this.questions = QuestionBank.GAMING_QUESTIONS;
+                this.choices = QuestionBank.GAMING_CHOICES;
+                this.answers = QuestionBank.GAMING_ANSWERS;
+                break;
         }
-        questionIndex++;
-        return isCorrect;
     }
 
-    public boolean hasMoreQuestions() {
-        return questionIndex < questions.length;
+    public String[] getQuestions() {
+        return this.questions;
+    }
+
+    public String[][] getChoices() {
+        return this.choices;
+    }
+
+    public String[] getAnswers() {
+        return this.answers;
     }
 }
-

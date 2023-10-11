@@ -1,111 +1,171 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
-public class QuizUI extends JFrame implements ActionListener {
-    private QuizLogic quizLogic;
+public class QuizUI extends JPanel implements ActionListener {
+    private JLabel questionLabel, scoreLabel;
+    private JRadioButton[] answerButtons = new JRadioButton[4];
+    private ButtonGroup buttonGroup = new ButtonGroup();
+    private JButton submitButton, retakeButton, quitButton;
 
-    private JLabel questionLabel;
-    private JLabel scoreLabel;
-    private JRadioButton[] answerButtons;
-    private ButtonGroup group;
-    private JButton submitButton;
-    private JButton retakeButton;
-    private JButton quitButton;
+    private String[] questions;
+    private String[][] choices;
+    private String[] correctAnswers;
+    private int currentQuestionIndex = 0;
+    private int score = 0;
 
-    public QuizUI(QuizLogic quizLogic) {
-        this.quizLogic = quizLogic;
-        setupQuizUI();
+    private CardLayout cardLayout;
+
+
+    public QuizUI(QuizLogic quizLogic, JFrame parentFrame, CardLayout cardLayout) {
+        this.cardLayout = cardLayout;
+
+        // First, set the questions, choices, and correctAnswers from quizLogic
+        this.questions = quizLogic.getQuestions();
+        this.choices = quizLogic.getChoices();
+        this.correctAnswers = quizLogic.getAnswers();
+
+        // Then, initialize the UI components
+        initializeUIComponents(parentFrame, cardLayout);
     }
 
-    private void setupQuizUI() {
-        setLayout(new BorderLayout());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 200);
-        setTitle("Quiz App");
 
-        scoreLabel = new JLabel("Your Current Score: 0", SwingConstants.CENTER);
+    public void initializeUIComponents(JFrame parentFrame, CardLayout cardLayout) {
+        setLayout(new BorderLayout());
+
+        scoreLabel = new JLabel("Score: 0", JLabel.CENTER); // Aligned to center
         add(scoreLabel, BorderLayout.NORTH);
 
-        questionLabel = new JLabel("", SwingConstants.CENTER);
+        // Use a new JPanel to hold both the question and the choices vertically
+        JPanel centerPanel = new JPanel(new BorderLayout());
 
-        answerButtons = new JRadioButton[4];
-        group = new ButtonGroup();
-        JPanel answerPanel = new JPanel(new GridLayout(4, 1));
+        questionLabel = new JLabel(questions[currentQuestionIndex]);
+        JPanel questionPanel = new JPanel();
+        questionPanel.add(questionLabel);
+        centerPanel.add(questionPanel, BorderLayout.NORTH);
 
+        JPanel answersPanel = new JPanel(new GridLayout(4, 1));
         for (int i = 0; i < 4; i++) {
             answerButtons[i] = new JRadioButton();
-            group.add(answerButtons[i]);
-            answerPanel.add(answerButtons[i]);
+            buttonGroup.add(answerButtons[i]);
+            answersPanel.add(answerButtons[i]);
         }
+        updateChoices();
+        centerPanel.add(answersPanel, BorderLayout.CENTER); // Adjusted to center
 
-        JPanel centerPanel = new JPanel(new GridLayout(2, 1));
-        centerPanel.add(questionLabel);
-        centerPanel.add(answerPanel);
-        add(centerPanel, BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER); // Adding centerPanel to the main layout
 
-        submitButton = new JButton("Submit");
+        submitButton = new JButton("Submit Answer");
         submitButton.addActionListener(this);
-        add(submitButton, BorderLayout.SOUTH);
 
-        loadQuestion();
-        setVisible(true);
-    }
-
-    private void setupFinalUI() {
-        getContentPane().removeAll();
-
-        JLabel finalScoreLabel = new JLabel("Your Final Score: " + quizLogic.getScore() + "/" + quizLogic.getTotalQuestions(), SwingConstants.CENTER);
-        add(finalScoreLabel, BorderLayout.CENTER);
-
-        retakeButton = new JButton("Retake");
-        retakeButton.addActionListener(e -> {
-            quizLogic = new QuizLogic(); // Reset the logic for a new quiz
-            getContentPane().removeAll();
-            setupQuizUI();
-            revalidate();
-            repaint();
-        });
-
+        retakeButton = new JButton("Retake Quiz");
         quitButton = new JButton("Quit");
+        retakeButton.addActionListener(e -> {
+            parentFrame.getContentPane().removeAll();
+            parentFrame.add(new TopicSelectionUI(parentFrame, new QuizLogic(), this.cardLayout), "TopicSelection");
+            this.cardLayout.show(parentFrame.getContentPane(), "TopicSelection");
+            parentFrame.revalidate();
+            parentFrame.repaint();
+        });
         quitButton.addActionListener(e -> System.exit(0));
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(retakeButton);
-        buttonPanel.add(quitButton);
-        add(buttonPanel, BorderLayout.SOUTH);
+        JPanel southPanel = new JPanel();
+        southPanel.add(submitButton);
 
-        revalidate();
-        repaint();
+        add(southPanel, BorderLayout.SOUTH);
     }
 
-    private void loadQuestion() {
-        group.clearSelection();
 
-        if (quizLogic.hasMoreQuestions()) {
-            questionLabel.setText(quizLogic.getCurrentQuestion());
-            String[] currentChoices = quizLogic.getCurrentChoices();
-            for (int i = 0; i < 4; i++) {
-                answerButtons[i].setText(currentChoices[i]);
-            }
-            scoreLabel.setText("Your Current Score: " + quizLogic.getScore());
-        } else {
-            SwingUtilities.invokeLater(this::setupFinalUI);
+    private void updateChoices() {
+        for (int i = 0; i < 4; i++) {
+            answerButtons[i].setText(choices[currentQuestionIndex][i]);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String userAnswer = "";
-        for (int i = 0; i < 4; i++) {
-            if (answerButtons[i].isSelected()) {
-                userAnswer = answerButtons[i].getText().substring(0, 1);
+        if (e.getSource() == submitButton) {
+            String userAnswer = "";
+            for (int i = 0; i < 4; i++) {
+                if (answerButtons[i].isSelected()) {
+                    userAnswer = answerButtons[i].getText().substring(0, 1);
+                }
+            }
+
+            if (userAnswer.equals(correctAnswers[currentQuestionIndex])) {
+                score++;
+                scoreLabel.setText("Score: " + score);
+            }
+
+            currentQuestionIndex++;
+            buttonGroup.clearSelection();
+
+            if (currentQuestionIndex < questions.length) {
+                questionLabel.setText(questions[currentQuestionIndex]);
+                updateChoices();
+            } else {
+                displayResults();
             }
         }
+    }
 
-        quizLogic.answerQuestion(userAnswer);
-        loadQuestion();
+    private void displayResults() {
+        // Hide the scoreLabel from the top
+        scoreLabel.setVisible(false);
+
+        // Set the final score as text of questionLabel
+        questionLabel.setText("Final Score: " + score);
+
+        // Hide the radio buttons
+        for (JRadioButton btn : answerButtons) {
+            btn.setVisible(false);
+        }
+
+        // Hide the submit button
+        submitButton.setVisible(false);
+
+        // Create a new panel to hold centered components and set its layout to GridBagLayout
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // Add the final score label
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.anchor = GridBagConstraints.CENTER;
+        centerPanel.add(questionLabel, gbc);
+
+        // Create a new panel for the buttons and add it below the score label
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.add(retakeButton);
+        buttonPanel.add(quitButton);
+
+        gbc.gridy = 1;
+        centerPanel.add(buttonPanel, gbc);
+
+        // Remove all components from the main panel and add the centerPanel
+        this.removeAll();
+        add(centerPanel, BorderLayout.CENTER);
+
+        revalidate();
+        repaint();
+    }
+
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame();
+        frame.setTitle("Quiz App");
+        frame.setSize(400, 200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        CardLayout cardLayout = new CardLayout();
+        frame.setLayout(cardLayout);
+
+        QuizLogic logic = new QuizLogic();
+        frame.add(new TopicSelectionUI(frame, logic, cardLayout), "TopicSelection");
+
+        frame.setVisible(true);
     }
 }
-
