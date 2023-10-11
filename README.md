@@ -1,2 +1,2 @@
 # QuiZzz
-test
+This is a quiz app.

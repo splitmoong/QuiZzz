@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+//hello from me
 class QuizApp extends JFrame implements ActionListener {
     private int score = 0;
     private int questionIndex = 0;
