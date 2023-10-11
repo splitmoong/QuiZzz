@@ -66,6 +66,9 @@ public class QuizUI extends JFrame implements ActionListener {
         if(high_score > current_score){
             highScoreField.setText("High Score: " + high_score);
         }
+        if(high_score == current_score){
+            highScoreField.setText("Your Score is the High Score!!");
+        }
         System.out.println(current_score);
         System.out.println(high_score);
 

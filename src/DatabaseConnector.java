@@ -11,14 +11,11 @@ public class DatabaseConnector {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            Statement stmt = conn.createStatement();
             String sql = "INSERT INTO players (player_username, player_password)" + "VALUES (?,?)";
-            String entered_username = user_username;
-            String entered_password = user_password;
 
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, entered_username);
-            preparedStatement.setString(2, entered_password);
+            preparedStatement.setString(1, user_username);
+            preparedStatement.setString(2, user_password);
 
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0) {
@@ -38,17 +35,12 @@ public class DatabaseConnector {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            Statement stmt = conn.createStatement();
-
             // Replace 'your_table' with the actual table name where user information is stored
             String selectSql = "SELECT player_password FROM players WHERE player_username = ? AND player_password = ?";
 
-            String enteredUsername = user_username;
-            String enteredPassword = user_password;
-
             PreparedStatement selectStatement = conn.prepareStatement(selectSql);
-            selectStatement.setString(1, enteredUsername);
-            selectStatement.setString(2, enteredPassword);
+            selectStatement.setString(1, user_username);
+            selectStatement.setString(2, user_password);
 
             ResultSet resultSet = selectStatement.executeQuery();
 
@@ -93,7 +85,6 @@ public class DatabaseConnector {
 
         try {
             Connection conn = DriverManager.getConnection(url, username, password);
-            Statement stmt = conn.createStatement();
 
             String selectLastIdSql = "SELECT id FROM players ORDER BY id DESC LIMIT 1";
             PreparedStatement selectStatement = conn.prepareStatement(selectLastIdSql);
