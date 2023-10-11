@@ -1,0 +1,126 @@
+COMPUTER SCIENCE
+
+What is the time complexity of a binary search algorithm when searching for an element in a sorted array of size n?
+a) O(1)
+b) O(log n) (Answer)
+c) O(n)
+d) O(n log n)
+
+In object-oriented programming, which principle refers to the ability of different classes to be treated as instances of the same class through inheritance?
+a) Encapsulation
+b) Polymorphism
+c) Abstraction
+d) Inheritance (Answer)
+
+Which programming paradigm is characterized by the use of mathematical functions and avoids changing state and mutable data?
+a) Object-Oriented Programming
+b) Procedural Programming
+c) Functional Programming (Answer)
+d) Imperative Programming
+
+What is the term for a type of memory that retains data even when the power is turned off, commonly used in BIOS settings?
+a) RAM
+b) ROM (Answer)
+c) Cache
+d) Virtual Memory
+
+What component is primarily responsible for rendering graphics in modern gaming PCs and workstations?
+a) CPU
+b) GPU (Graphics Processing Unit) (Answer)
+c) RAM
+d) Hard Drive
+
+In the context of computer networking, what does DHCP stand for?
+a) Dynamic Host Control Protocol
+b) Data Handling and Control Protocol
+c) Dynamic Host Configuration Protocol (Answer)
+d) Digital Hardware and Communication Protocol
+
+Which of the following is a popular version control system commonly used for tracking changes in source code during software development?
+a) SVN (Subversion)
+b) Git (Answer)
+c) Mercurial
+d) CVS (Concurrent Versions System)
+
+Which type of software is designed to simulate a physical machine or environment for testing and development purposes?
+a) Virtualization Software (Answer)
+b) Antivirus Software
+c) Office Suite Software
+d) Database Management Software
+
+In the context of programming languages, what does the acronym "API" stand for?
+a) Application Programming Interface (Answer)
+b) Advanced Programming Instruction
+c) Application Process Indicator
+d) Advanced Program Integration
+
+What is the primary function of a BIOS (Basic Input/Output System) in a computer?
+a) To control the display resolution
+b) To manage system resources
+c) To initialize hardware components and start the boot process (Answer)
+d) To facilitate software installation
+
+GENERAL KNOWLEDGE
+
+Who wrote the play "Romeo and Juliet"?
+a) William Shakespeare (Answer)
+b) Charles Dickens
+c) Jane Austen
+d) Leo Tolstoy
+
+Which country is known as the Land of the Rising Sun?
+a) China
+b) South Korea
+c) Japan (Answer)
+d) Thailand
+
+Who is the author of "To Kill a Mockingbird"?
+a) Charles Dickens
+b) Mark Twain
+c) Harper Lee (Answer)
+d) Jane Austen
+
+Who is the current President of the United States (as of my last knowledge update in September 2021)?
+a) Joe Biden (Answer)
+b) Donald Trump
+c) Barack Obama
+d) George W. Bush
+
+Who painted the famous "Starry Night"?
+a) Vincent van Gogh (Answer)
+b) Pablo Picasso
+c) Leonardo da Vinci
+d) Claude Monet
+
+Which planet is often referred to as the "Red Planet"?
+a) Jupiter
+b) Venus
+c) Mars (Answer)
+d) Saturn
+
+Who wrote the "Harry Potter" book series?
+a) J.R.R. Tolkien
+b) George R.R. Martin
+c) J.K. Rowling (Answer)
+d) C.S. Lewis
+
+What is the tallest mountain in the world?
+a) Mount Kilimanjaro
+b) Mount McKinley
+c) Mount Everest (Answer)
+d) Mount Fuji
+
+What is the largest species of penguin in the world?
+a) Emperor Penguin (Answer)
+b) King Penguin
+c) Adélie Penguin
+d) Gentoo Penguin
+
+Who is known as the "Father of Modern Physics" and formulated the theory of relativity?
+a) Isaac Newton
+b) Galileo Galilei
+c) Albert Einstein (Answer)
+d) Max Planck
+
+
+
