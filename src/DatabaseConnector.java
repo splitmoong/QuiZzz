@@ -35,6 +35,41 @@ public class DatabaseConnector {
 
         return null;
     }
+    public static Connection checkUserValid(String user_username, String user_password) {
+        String url = "jdbc:mysql://localhost:3306/moong";
+        String username = "root";
+        String password = "password";
+
+        try {
+            Connection conn = DriverManager.getConnection(url, username, password);
+            Statement stmt = conn.createStatement();
+
+            // Replace 'your_table' with the actual table name where user information is stored
+            String selectSql = "SELECT player_password FROM players WHERE player_username = ? AND player_password = ?";
+
+            String enteredUsername = user_username;
+            String enteredPassword = user_password;
+
+            PreparedStatement selectStatement = conn.prepareStatement(selectSql);
+            selectStatement.setString(1, enteredUsername);
+            selectStatement.setString(2, enteredPassword);
+
+            ResultSet resultSet = selectStatement.executeQuery();
+
+            if (resultSet.next()) {
+                System.out.println("inside");
+                QuizLogic logic = new QuizLogic();
+                new QuizUI(logic);
+                return conn;
+            } else {
+                conn.close(); // Close the connection
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null; // Handle the exception and return null
+        }
+    }
 }
 
 

@@ -1,7 +1,12 @@
+import javax.swing.*;
+
 public class QuizApp { // pull check
     public static void main(String[] args) {
         DatabaseConnector.getConnection();
-        QuizLogic logic = new QuizLogic();
-        new QuizUI(logic);
+        SwingUtilities.invokeLater(() -> {
+            SplashScreen splashScreen = new SplashScreen();
+            splashScreen.setVisible(true);
+        });
+
     }
 }

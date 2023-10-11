@@ -2,10 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 public class QuizUI extends JFrame implements ActionListener {
     private QuizLogic quizLogic;
-
     private JLabel questionLabel;
     private JLabel scoreLabel;
     private JRadioButton[] answerButtons;
@@ -13,6 +11,7 @@ public class QuizUI extends JFrame implements ActionListener {
     private JButton submitButton;
     private JButton retakeButton;
     private JButton quitButton;
+    private JPanel panel1;
 
     public QuizUI(QuizLogic quizLogic) {
         this.quizLogic = quizLogic;
@@ -95,6 +94,10 @@ public class QuizUI extends JFrame implements ActionListener {
         }
     }
 
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new QuizUI(new QuizLogic()));
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String userAnswer = "";
@@ -108,4 +111,6 @@ public class QuizUI extends JFrame implements ActionListener {
         loadQuestion();
     }
 }
+
+
 
