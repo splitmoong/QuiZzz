@@ -53,7 +53,23 @@ public class QuizUI extends JFrame implements ActionListener {
     }
 
     private void setupFinalUI() {
+
         getContentPane().removeAll();
+        int current_score = quizLogic.getScore();
+        DatabaseConnector.addUserScore(current_score);
+        int high_score = DatabaseConnector.getHighScore();
+
+        JTextField highScoreField = new JTextField(10); // A text field to display high score
+        highScoreField.setEditable(false); // Make it read-only
+        highScoreField.setHorizontalAlignment(JTextField.CENTER);
+
+        if(high_score > current_score){
+            highScoreField.setText("High Score: " + high_score);
+        }
+        System.out.println(current_score);
+        System.out.println(high_score);
+
+        add(highScoreField, BorderLayout.NORTH);
 
         JLabel finalScoreLabel = new JLabel("Your Final Score: " + quizLogic.getScore() + "/" + quizLogic.getTotalQuestions(), SwingConstants.CENTER);
         add(finalScoreLabel, BorderLayout.CENTER);

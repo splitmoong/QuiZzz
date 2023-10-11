@@ -1,15 +1,18 @@
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SplashScreen extends JFrame implements ActionListener {
+
     private JLabel enter_username_prompt;
     private JTextField username;
     private JLabel enter_password_prompt;
     private JTextField password;
     private JButton new_user;
     private JButton existing_user;
+    private JPanel panel1;
 
     public SplashScreen() {
         setLayout(new BorderLayout());
@@ -47,7 +50,7 @@ public class SplashScreen extends JFrame implements ActionListener {
             String enteredPassword = password.getText();
             QuizLogic logic = new QuizLogic();
             new QuizUI(logic);
-
+            DatabaseConnector.getConnection(enteredUsername, enteredPassword);
 
         } else if (e.getSource() == existing_user) {
             String enteredUsername = username.getText();
@@ -63,6 +66,7 @@ public class SplashScreen extends JFrame implements ActionListener {
             splashScreen.setVisible(true);
         });
     }
+
 }
 
 
