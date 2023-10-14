@@ -63,19 +63,17 @@ public class QuizUI extends JFrame implements ActionListener {
         highScoreField.setEditable(false); // Make it read-only
         highScoreField.setHorizontalAlignment(JTextField.CENTER);
 
-        if(high_score > current_score){
-            highScoreField.setText("High Score: " + high_score);
-        }
-        if(high_score == current_score){
-            highScoreField.setText("Your Score is the High Score!!");
-        }
+        highScoreField.setText("Your Personal Best: " + SharedData.personal_best + "            High Score is: " + high_score);
+
         System.out.println(current_score);
         System.out.println(high_score);
 
         add(highScoreField, BorderLayout.NORTH);
 
         JLabel finalScoreLabel = new JLabel("Your Final Score: " + quizLogic.getScore() + "/" + quizLogic.getTotalQuestions(), SwingConstants.CENTER);
+        finalScoreLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 50, 10)); // Adjust the values for desired spacing
         add(finalScoreLabel, BorderLayout.CENTER);
+
 
         retakeButton = new JButton("Retake");
         retakeButton.addActionListener(e -> {
@@ -130,6 +128,7 @@ public class QuizUI extends JFrame implements ActionListener {
         loadQuestion();
     }
 }
+
 
 
 
