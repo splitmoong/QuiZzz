@@ -10,3 +10,10 @@ Functionality
 
 Bugs
 1. If you click the existing user button with everything valid, it will go to the mcq section but your score will not be stored in thr row associated with the username. This is because it is using the incriment id primary key to add the score.
+-splitmoong
+
+14.10.2023
+
+Functionality
+1. The final UI now shows your personal best and the high score (comparing all users) in the top.
+-splitmoong
