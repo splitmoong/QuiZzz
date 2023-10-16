@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,8 @@ public class QuizUI extends JFrame implements ActionListener {
     public QuizUI(QuizLogic quizLogic) {
         this.quizLogic = quizLogic;
         setupQuizUI();
+        ImageIcon image = new ImageIcon("design/quizzzicon.png");
+        setIconImage(image.getImage());
     }
 
     private void setupQuizUI() {
@@ -26,8 +29,12 @@ public class QuizUI extends JFrame implements ActionListener {
 
         scoreLabel = new JLabel("Your Current Score: 0", SwingConstants.CENTER);
         add(scoreLabel, BorderLayout.NORTH);
+        scoreLabel.setFont(new Font("Ariel", Font.PLAIN, 15));
+
 
         questionLabel = new JLabel("", SwingConstants.CENTER);
+        questionLabel.setFont(new Font("Ariel", Font.PLAIN, 16));
+        questionLabel.setBorder(new EmptyBorder(0, 20, 0, 0));
 
         answerButtons = new JRadioButton[4];
         group = new ButtonGroup();
@@ -37,6 +44,10 @@ public class QuizUI extends JFrame implements ActionListener {
             answerButtons[i] = new JRadioButton();
             group.add(answerButtons[i]);
             answerPanel.add(answerButtons[i]);
+
+            // Set the preferred size for the radio buttons
+            Dimension largerSize = new Dimension(500, 40); // Adjust the size as needed
+            answerButtons[i].setPreferredSize(largerSize);
         }
 
         JPanel centerPanel = new JPanel(new GridLayout(2, 1));
@@ -47,6 +58,9 @@ public class QuizUI extends JFrame implements ActionListener {
         submitButton = new JButton("Submit");
         submitButton.addActionListener(this);
         add(submitButton, BorderLayout.SOUTH);
+        submitButton.setFont(new Font("Ariel", Font.TRUETYPE_FONT, 18));
+        submitButton.setBackground(Color.PINK);
+        this.add(submitButton, BorderLayout.SOUTH);
 
         loadQuestion();
         setVisible(true);
@@ -63,7 +77,9 @@ public class QuizUI extends JFrame implements ActionListener {
         highScoreField.setEditable(false); // Make it read-only
         highScoreField.setHorizontalAlignment(JTextField.CENTER);
 
-        highScoreField.setText("Your Personal Best: " + SharedData.personal_best + "            High Score is: " + high_score);
+        highScoreField.setText("Your Personal Best: " + SharedData.personal_best + "        High Score is: " + high_score);
+        highScoreField.setFont(new Font("Ariel", Font.PLAIN,14)); // Adjust the font size (20 in this example)
+
 
         System.out.println(current_score);
         System.out.println(high_score);
@@ -73,6 +89,7 @@ public class QuizUI extends JFrame implements ActionListener {
         JLabel finalScoreLabel = new JLabel("Your Final Score: " + quizLogic.getScore() + "/" + quizLogic.getTotalQuestions(), SwingConstants.CENTER);
         finalScoreLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 50, 10)); // Adjust the values for desired spacing
         add(finalScoreLabel, BorderLayout.CENTER);
+        finalScoreLabel.setFont(new Font("Ariel", Font.PLAIN, 24)); // Adjust the font size (20 in this example)
 
 
         retakeButton = new JButton("Retake");
@@ -83,13 +100,32 @@ public class QuizUI extends JFrame implements ActionListener {
             revalidate();
             repaint();
         });
+        retakeButton.setFont(new Font("Ariel", Font.BOLD, 16));
+        retakeButton.setBackground(Color.PINK);
+        retakeButton.setFont(new Font("Ariel", Font.TRUETYPE_FONT, 18)); // Adjust the font style and size
+        this.add(retakeButton, BorderLayout.SOUTH);
 
         quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> System.exit(0));
+        quitButton.setFont(new Font("Ariel", Font.TRUETYPE_FONT, 18));
+        quitButton.setBackground(Color.PINK);
+        this.add(quitButton, BorderLayout.SOUTH);
 
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(retakeButton);
-        buttonPanel.add(quitButton);
+
+        JPanel buttonPanel =  new JPanel(new GridBagLayout());
+        GridBagConstraints constraints = new GridBagConstraints();
+
+        // Make the "Retake" button expand to fill the entire space
+        constraints.fill = GridBagConstraints.HORIZONTAL;
+        constraints.weightx = 0.5;
+
+        buttonPanel.add(retakeButton, constraints);
+
+        // Reset constraints for the "Quit" button
+        constraints.weightx = 0.5;
+
+        buttonPanel.add(quitButton, constraints);
+
         add(buttonPanel, BorderLayout.SOUTH);
 
         revalidate();
@@ -100,10 +136,11 @@ public class QuizUI extends JFrame implements ActionListener {
         group.clearSelection();
 
         if (quizLogic.hasMoreQuestions()) {
-            questionLabel.setText(quizLogic.getCurrentQuestion());
+            questionLabel.setText("<html>" + quizLogic.getCurrentQuestion().toString() + "</html>");
             String[] currentChoices = quizLogic.getCurrentChoices();
             for (int i = 0; i < 4; i++) {
                 answerButtons[i].setText(currentChoices[i]);
+                answerButtons[i].setFont(new Font("Ariel", Font.PLAIN, 16));
             }
             scoreLabel.setText("Your Current Score: " + quizLogic.getScore());
         } else {
@@ -123,6 +160,7 @@ public class QuizUI extends JFrame implements ActionListener {
                 userAnswer = answerButtons[i].getText().substring(0, 1);
             }
         }
+        ImageIcon logo = new ImageIcon("quizzzicon.png");
 
         quizLogic.answerQuestion(userAnswer);
         loadQuestion();

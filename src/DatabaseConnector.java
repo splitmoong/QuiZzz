@@ -120,21 +120,15 @@ public class DatabaseConnector {
             SharedData.personal_best = personal_best;
 
             String updateScoreSql = "UPDATE players SET high_score = ? WHERE player_username = ?";
-            PreparedStatement updateStatement02 = conn.prepareStatement(updateScoreSql);
-            updateStatement02.setInt(1, current_score);
-            updateStatement02.setString(2, user);
+            PreparedStatement updateStatement = conn.prepareStatement(updateScoreSql);
+            updateStatement.setInt(1, current_score);
+            updateStatement.setString(2, user);
 
-
-            // Step 2: Insert the high_score with the retrieved ID
-            String insertScoreSql = "UPDATE players SET high_score = ? WHERE player_username = ?";
-            PreparedStatement insertStatement = conn.prepareStatement(insertScoreSql);
-            insertStatement.setInt(1, current_score);
-            insertStatement.setString(2, user);
-
-            if(current_score > personal_best){
-                ResultSet resultSet02 = updateStatement01.executeQuery();
-                int rowsInserted = insertStatement.executeUpdate();
-                SharedData.personal_best = current_score;
+            if (current_score > personal_best) {
+                int rowsUpdated = updateStatement.executeUpdate();
+                if (rowsUpdated > 0) {
+                    SharedData.personal_best = current_score;
+                }
             }
 
             conn.close();
@@ -146,7 +140,6 @@ public class DatabaseConnector {
 
 
     }
-
 
 }
 
