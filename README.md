@@ -10,10 +10,23 @@ Functionality
 
 Bugs
 1. If you click the existing user button with everything valid, it will go to the mcq section but your score will not be stored in thr row associated with the username. This is because it is using the incriment id primary key to add the score.
+
 -splitmoong
 
 14.10.2023
 
-Functionality
+Functionality Added
 1. The final UI now shows your personal best and the high score (comparing all users) in the top.
+2. The previous bug was fixed by implimenting a function that stores the personal best score based on the username and not the id (primary incriment key)
+
 -splitmoong
+
+16.10.2023
+
+Functionality Added
+1. The UI elements like the buttons have been made more coherent with each other and the text fields have been made bigger for easy readability. An icon has also been added to the program.
+
+Bugs
+1. If you leave the feilds blank in the splash screen and click on new user, it will create an entry in the database with blank username and password. This has to be fixed by adding a check in the getConnection function of the DatabaseConnector class.
+
+-splitmoong.
